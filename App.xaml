@@ -1,0 +1,27 @@
+﻿<Application x:Class="ReKi2.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:ReKi2"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <Style x:Key="GridButtonStyle" TargetType="Grid">
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <SolidColorBrush Color="White"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="StackPanelButtonStyle" TargetType="StackPanel">
+            <Setter Property="Orientation" Value="Vertical"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Bottom"/>
+        </Style>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Padding" Value="5"/>
+        </Style>
+    </Application.Resources>
+</Application>

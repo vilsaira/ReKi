@@ -1,0 +1,17 @@
+C:\Users\Viljami\Documents\ReKi-2.0\ReKi2\ReKi2\bin\x86\Release\ReKi2.exe.config
+C:\Users\Viljami\Documents\ReKi-2.0\ReKi2\ReKi2\bin\x86\Release\ReKi2.exe
+C:\Users\Viljami\Documents\ReKi-2.0\ReKi2\ReKi2\bin\x86\Release\ReKi2.pdb
+C:\Users\Viljami\Documents\ReKi-2.0\ReKi2\ReKi2\bin\x86\Release\Microsoft.Kinect.dll
+C:\Users\Viljami\Documents\ReKi-2.0\ReKi2\ReKi2\bin\x86\Release\Microsoft.Kinect.xml
+C:\Users\Viljami\Documents\ReKi-2.0\ReKi2\ReKi2\obj\x86\Release\MainWindow.g.cs
+C:\Users\Viljami\Documents\ReKi-2.0\ReKi2\ReKi2\obj\x86\Release\App.g.cs
+C:\Users\Viljami\Documents\ReKi-2.0\ReKi2\ReKi2\obj\x86\Release\ReKi2_MarkupCompile.cache
+C:\Users\Viljami\Documents\ReKi-2.0\ReKi2\ReKi2\obj\x86\Release\ReKi2_MarkupCompile.lref
+C:\Users\Viljami\Documents\ReKi-2.0\ReKi2\ReKi2\obj\x86\Release\App.baml
+C:\Users\Viljami\Documents\ReKi-2.0\ReKi2\ReKi2\obj\x86\Release\MainWindow.baml
+C:\Users\Viljami\Documents\ReKi-2.0\ReKi2\ReKi2\obj\x86\Release\ReKi2.g.resources
+C:\Users\Viljami\Documents\ReKi-2.0\ReKi2\ReKi2\obj\x86\Release\ReKi2.Properties.Resources.resources
+C:\Users\Viljami\Documents\ReKi-2.0\ReKi2\ReKi2\obj\x86\Release\ReKi2.csproj.GenerateResource.Cache
+C:\Users\Viljami\Documents\ReKi-2.0\ReKi2\ReKi2\obj\x86\Release\ReKi2.exe
+C:\Users\Viljami\Documents\ReKi-2.0\ReKi2\ReKi2\obj\x86\Release\ReKi2.pdb
+C:\Users\Viljami\Documents\ReKi-2.0\ReKi2\ReKi2\obj\x86\Release\ReKi2.csprojResolveAssemblyReference.cache
