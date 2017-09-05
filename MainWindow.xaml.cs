@@ -119,7 +119,7 @@ namespace ReKi2 {
                         //BitmapEncoder encoder = new PngBitmapEncoder(); // 2000kt and slower
                         BitmapEncoder encoder = new JpegBitmapEncoder();  // 300kt     
                         encoder.Frames.Add(BitmapFrame.Create(BitmapSource.Create(width, height, 96, 96, PixelFormats.Bgr32, null, pixels, stride)));
-                        string pathOut = System.IO.Path.Combine(this._pathColor + "\\K2V-color-" + _frameTime.Replace(',', '-') + "0000.jpg");
+                        string pathOut = System.IO.Path.Combine(this._pathColor + "\\K2V-color-" + _frameTime.Replace(',', '-') + ".jpg");
                         try {
                             using (FileStream fs = new FileStream(pathOut, FileMode.Create)) {
                                 encoder.Save(fs);
@@ -153,11 +153,9 @@ namespace ReKi2 {
                         frame.CopyFrameDataToArray(depthData);
                         gotdata = true;
                     }
-                }
-                if (!this._recording) {
-                    this._depthMM = depthData;
-                }
+                }                                
                 if (gotdata) {
+                    this._depthMM = depthData;
                     //for (int i = 0; i < depthData.Length; ++i) {
                     //    ushort depth = depthData[i];
                     //    byte intensity = (byte)(depth >= minDepth ? (depth <= maxDepth ? depth / 31.25 : 255) : 0);
@@ -184,7 +182,7 @@ namespace ReKi2 {
                     if (this._recording) {                        
                         BitmapEncoder encoder = new PngBitmapEncoder();
                         encoder.Frames.Add(BitmapFrame.Create(BitmapSource.Create(width, height, 96, 96, PixelFormats.Gray16, null, depthData, stride16)));
-                        string pathOut = System.IO.Path.Combine(this._pathDepth + "\\K2V-depth-" + _frameTime.Replace(',', '-') + "0000.png");                        
+                        string pathOut = System.IO.Path.Combine(this._pathDepth + "\\K2V-depth-" + _frameTime.Replace(',', '-') + ".png");                        
                         try {
                             using (FileStream fs = new FileStream(pathOut, FileMode.Create)) {
                                 encoder.Save(fs);
@@ -196,20 +194,17 @@ namespace ReKi2 {
                 }
             });
         }
-        
-        private void Depth_MouseMove(object sender, MouseEventArgs e) {
-            try {
-                double x = Mouse.GetPosition(this.cameraDepth).X;
-                double y = Mouse.GetPosition(this.cameraDepth).Y;               
-                ushort depth = this._depthMM[(int)(y + x * y)];
-                depth /= 10; // distance in cm
-                if (depth != 0) {
-                    this.txtb_distance.Text = "Distance: " + depth.ToString() + " cm";
-                }
-            }
-            catch {
 
-            }
+        private void Depth_MouseMove( object sender, MouseEventArgs e ) {
+            if (System.Windows.Input.Mouse.LeftButton == MouseButtonState.Pressed) {
+                double x = Mouse.GetPosition(this.cameraDepth).X;
+                double y = Mouse.GetPosition(this.cameraDepth).Y;                
+                ushort depth = this._depthMM[(int)(x + y * 512)];
+                depth /= 10; // distance in cm
+                if (depth > 50 | depth < 450) {
+                    this.txtb_distance.Text = "Distance: " + depth.ToString() + " cm (" + ((int)x).ToString() + ", " + ((int)y).ToString() + ")";
+                }
+            }            
         }
         
         private void Button_Record_Callback(object sender, RoutedEventArgs e) {
@@ -224,30 +219,35 @@ namespace ReKi2 {
                 this.recordingText.Visibility = Visibility.Collapsed;
                 this.btn_RecordPause.Background = System.Windows.Media.Brushes.LightGreen;
                 this.btn_RecordPause.Content = "Record";
-                // Freeze UI and add blanks
+                // Freeze UI for processing, blanks will break gstream so do not add them
                 System.Threading.Thread.Sleep(500);
                 string[] colorFiles = Directory.GetFiles(@_pathColor, "K2V-color*jpg");
                 string[] depthFiles = Directory.GetFiles(@_pathDepth, "K2V-depth*png");
-                string lastColorFile = colorFiles.Last();
-                string lastDepthFile = depthFiles.Last();
-                WriteableBitmap bmpC = new WriteableBitmap(1920, 1080, 96, 96, PixelFormats.Bgr32, null);
-                WriteableBitmap bmpD = new WriteableBitmap(512, 424, 96, 96, PixelFormats.Gray16, null);
-                bmpC.Freeze();
-                bmpD.Freeze();                
-                for (int i = 10; i < 70; ++i) {
-                    string tmpPathC = lastColorFile.Replace("0000.jpg", "00" + i.ToString() + ".jpg");
-                    string tmpPathD = lastDepthFile.Replace("0000.png", "00" + i.ToString() + ".png");
-                    BitmapEncoder encoderJPEG = new JpegBitmapEncoder();
-                    BitmapEncoder encoderPNG = new PngBitmapEncoder();
-                    encoderJPEG.Frames.Add(BitmapFrame.Create(bmpC));
-                    encoderPNG.Frames.Add(BitmapFrame.Create(bmpD));
-                    try {
-                        using (FileStream fs = new FileStream(tmpPathC, FileMode.Create)) { encoderJPEG.Save(fs); }
-                        using (FileStream fs = new FileStream(tmpPathD, FileMode.Create)) { encoderPNG.Save(fs); }
-                    } catch (IOException) {
-                        // oops                                
-                    }
-                }                
+
+                //string lastColorFile = colorFiles.Last();
+                //string lastDepthFile = depthFiles.Last();
+                //WriteableBitmap bmpC = new WriteableBitmap(1920, 1080, 96, 96, PixelFormats.Bgr32, null);
+                //WriteableBitmap bmpD = new WriteableBitmap(512, 424, 96, 96, PixelFormats.Gray16, null);
+                //bmpC.Freeze();
+                //bmpD.Freeze();                
+                //for (int i = 10; i < 70; ++i) {
+                //    string tmpPathC = lastColorFile.Replace(".jpg", "00" + i.ToString() + ".jpg");
+                //    string tmpPathD = lastDepthFile.Replace(".png", "00" + i.ToString() + ".png");
+                //    int ind = lastDepthFile.LastIndexOf("-") - 1;
+                //    int ind2 = lastDepthFile.LastIndexOf("-", ind) + 1;
+                //    int val = lastDepthFile[i]
+                    
+                //    BitmapEncoder encoderJPEG = new JpegBitmapEncoder();
+                //    BitmapEncoder encoderPNG = new PngBitmapEncoder();
+                //    encoderJPEG.Frames.Add(BitmapFrame.Create(bmpC));
+                //    encoderPNG.Frames.Add(BitmapFrame.Create(bmpD));
+                //    try {
+                //        using (FileStream fs = new FileStream(tmpPathC, FileMode.Create)) { encoderJPEG.Save(fs); }
+                //        using (FileStream fs = new FileStream(tmpPathD, FileMode.Create)) { encoderPNG.Save(fs); }
+                //    } catch (IOException) {
+                //        // oops                                
+                //    }
+                //}
 
                 colorFiles = Directory.GetFiles(@_pathColor, "K2V-color*jpg");
                 depthFiles = Directory.GetFiles(@_pathDepth, "K2V-depth*png");
